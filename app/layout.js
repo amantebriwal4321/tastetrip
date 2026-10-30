@@ -1,2 +1,2 @@
 export const metadata = { title: "TasteTrip", description: "Agentic weekend planner on the Qloo Taste API" };
-export default function L({ children }) { return <html lang="en"><body style={{ fontFamily: "system-ui", background: "#0f1115", color: "#e8e8e8", margin: 0 }}>{children}</body></html>; }
+export default function L({ children }) { return <html lang="en"><head><style>{`.fade{animation:f .6s ease-out}@keyframes f{from{opacity:0;transform:translateY(12px)}}.tilt:hover{box-shadow:0 10px 30px #ff4f8b33}@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}`}</style></head><body style={{ fontFamily: "system-ui", background: "#0f1115", color: "#e8e8e8", margin: 0 }}>{children}</body></html>; }
