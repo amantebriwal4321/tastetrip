@@ -1,3 +1,4 @@
+import { QLOO_FEATURES } from "../../../lib/qloo";
 import { runAgent } from "../../../lib/agent";
 export const maxDuration = 60;
 export async function POST(req) {
@@ -7,4 +8,4 @@ export async function POST(req) {
     return Response.json(await runAgent(prompt));
   } catch (e) { return Response.json({ error: e.message }, { status: 500 }); }
 }
-export async function GET() { return Response.json({ qloo: process.env.QLOO_API_KEY ? "live" : "demo" }); }
+export async function GET() { return Response.json({ qloo: process.env.QLOO_API_KEY ? "live" : "demo", features: QLOO_FEATURES }); }

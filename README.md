@@ -4,10 +4,26 @@ Agentic weekend planner built on the Qloo Taste API. Describe your vibe, the stu
 
 Live: https://tastetrip-aman.vercel.app
 
-## How it works
-- `lib/agent.js`: Gemini agent loop with two tools, `search_entities` and `get_insights`
-- `lib/qloo.js`: Qloo client. `GET /search` for entity resolution, `GET /v2/insights` with `filter.type`, `signal.interests.entities`, `signal.interests.tags`, `filter.location.query`. Auth via `X-Api-Key`
-- The UI shows every tool call the agent made, so you can see the Qloo signal behind each pick
+## How we use Qloo
+Qloo is the whole taste brain here. Every place, artist, film and brand in a plan comes from the Qloo Taste AI API. Gemini only decides which Qloo calls to make and writes the itinerary.
+
+| Agent tool | Qloo endpoint | What it does in TasteTrip |
+|---|---|---|
+| `search_entities` | `GET /search` | Turns names you type (Prateek Kuhad, Before Sunrise) into Qloo entity ids |
+| `search_tags` | `GET /v2/tags` | Turns loose vibes (filter coffee, chill indie) into Qloo tag ids |
+| `get_insights` | `GET /v2/insights` | Cross domain recs for places, artists, movies, brands, books. Uses `filter.type`, `signal.interests.entities`, `signal.interests.tags`, `filter.tags`, `filter.location.query` |
+| `get_audience` | `GET /v2/insights` with `filter.type=urn:demographics` | Age and gender taste profile behind your picks, used to tune the plan's tone |
+
+What you see in the UI:
+- A "How TasteTrip uses Qloo" panel listing each endpoint above
+- Every Qloo call the agent made, with its args and the returned entities as cards
+- Qloo affinity and popularity scores as bars on each entity
+- The plan quotes the Qloo affinity score behind each stop
+- "Powered by Qloo" badges on every section driven by Qloo data
+
+## Code
+- `lib/agent.js`: Gemini function calling loop over the four Qloo tools
+- `lib/qloo.js`: Qloo client, auth via `X-Api-Key`, base `https://hackathon.api.qloo.com`
 
 ## Run
 ```
